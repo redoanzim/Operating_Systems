@@ -33,22 +33,41 @@ int main() {
     bool finished[n] = {false};
     int safeSeq[n];
     int count = 0;
-    while(count<n){
+
+    while (count<n)
+    {
         bool found=false;
+
         for(int i=0; i<n; i++){
-            bool cr=true;
-            for(int j=0; j<m; j++){
-                if(need[i][j]>avail[j]){
-                    cr=false;
-                    break;
+            
+            if(!finished[i]){
+                bool run=true;
+                for(int j=0; j<m; j++){
+                    if(need[i][j]>avail[j]){
+                        run=false;
+                        break;
+                    }
+                }
+                if(run){
+                    for(int j=0; j<m; j++){
+                        avail[j]+=alloc[i][j];
+                    }
+                    found=true;
+                    safeSeq[count++]=i;
+                    finished[i]=true;
                 }
             }
         }
 
         if(!found){
-            cout<<"NO safe SEquence"<<endl;
-            return 0;
+            cout<<"There is no sefe sequence"<<endl;
         }
     }
+
+    cout<<"The process is in safe state"<<endl;
+    for(int i=0; i<n; i++){
+        cout<<"p"<<safeSeq[i]<<" ";
+    }
+    
 
 }
